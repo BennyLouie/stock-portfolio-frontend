@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload.user,
-                stocks: action.payload.stocks
+                stocks: action.payload.stocks,
+                errors: null
             }
         default: 
             return {
