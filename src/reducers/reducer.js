@@ -1,6 +1,7 @@
 const initialState = {
     user: null,
     stocks: null,
+    market: null,
     errors: null
 }
 
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
                 user: action.payload.user,
                 stocks: action.payload.stocks,
                 errors: null
+            }
+        case "GET_MARKET":
+            return {
+                ...state,
+                market: action.payload.market
             }
         default: 
             return {

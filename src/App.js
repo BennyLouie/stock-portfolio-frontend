@@ -42,7 +42,7 @@ class App extends React.Component {
           </div>
         ) : null}
         <Switch>
-          <Route exact path='/' render={props => <HomePage user={this.props.user} stocks={this.props.stocks} />} />
+          <Route exact path='/' render={props => <HomePage market={this.props.market} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}

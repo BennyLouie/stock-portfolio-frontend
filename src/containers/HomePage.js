@@ -1,11 +1,10 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
+import ActiveStocks from '../components/ActiveStocks'
 
-export default class HomePage extends React.Component {
-    render() {
-        console.log(this.props)
-        return (
-            <h1>HomePage</h1>
-        )
-    }
+export default function HomePage(props) {
+    console.log(props)
+    return (
+        <ActiveStocks market={props.market} />
+    )
 }
