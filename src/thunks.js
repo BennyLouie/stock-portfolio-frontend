@@ -13,7 +13,6 @@ export const loadUser = () => dispatch => {
                   type: "GET_USER",
                   payload: {
                         user: data.user,
-                        token: data.jwt,
                         stocks: data.stocks
                   }
                 })
@@ -49,7 +48,6 @@ export const fetchUser = evt => dispatch => {
                     type: "GET_USER",
                     payload: {
                         user: data.user,
-                        token: data.jwt,
                         stocks: data.stocks
                     }
                 })
