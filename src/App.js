@@ -29,9 +29,18 @@ class App extends React.Component {
   }
   
   render() {
-    console.log(this.props)
+    console.log(typeof(this.props.errors) === 'string')
     return (
       <div className="App">
+        {this.props.errors ? (typeof (this.props.errors) === 'string' ?
+          <div className="alert alert-dark">
+          {<h2 className='error'>{ this.props.errors }</h2>}
+          </div> 
+          :
+          <div className="alert alert-dark">
+            {this.props.errors.map(error => <h2 className='error'>{ error }</h2>)}
+          </div>
+        ) : null}
         <Switch>
           <Route exact path='/' render={props => <Portfolio {...this.props}/>} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />

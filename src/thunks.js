@@ -1,7 +1,8 @@
 //Auto Login with localStorage token
 export const loadUser = () => dispatch => {
     const token = localStorage.getItem("token")
-    if (localStorage.token) {
+    console.log(token)
+    if (token) {
         fetch("http://localhost:3000/auto_login", {
             headers: {
                 'Authorization': `Bearer ${token}`
