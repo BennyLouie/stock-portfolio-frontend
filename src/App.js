@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { withRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import SignIn from './components/SignIn'
 
 const mapStateToProps = state => {
   return {
@@ -24,7 +24,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path='/' render={props => ()} />
+          <Route exact path='/' render={props => <SignIn />} />
         </Switch>
       </div>
     )
