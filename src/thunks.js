@@ -70,6 +70,24 @@ export const fetchUser = evt => dispatch => {
                         stocks: data.stocks
                     }
                 })
+                return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        let parsedMarket = data.map(m => {
+                            let stockInfo = {}
+                            stockInfo.symbol = m.symbol
+                            stockInfo.name = m.companyName
+                            stockInfo.availableShares = m.iexAskSize
+                            stockInfo.stockPrice = m.iexAskPrice
+                            return stockInfo
+                        })
+                        dispatch({
+                            type: "GET_MARKET",
+                            payload: {
+                                market: parsedMarket
+                            }
+                        })
+                })
               }
         })
 }
