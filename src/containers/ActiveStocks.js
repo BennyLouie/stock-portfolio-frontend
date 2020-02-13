@@ -1,8 +1,10 @@
 import React from 'react'
+import Stock from '../components/Stock'
 
 export default function ActiveStocks(props) {
-    console.log(props)
     return (
-        <h1>Stocks</h1>
+        <div>
+            {props.market.map( (stock, idx) => <Stock key={idx} {...stock} />)}
+        </div>
     )
 }

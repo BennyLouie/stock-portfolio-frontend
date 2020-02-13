@@ -1,7 +1,7 @@
 const initialState = {
     user: null,
     stocks: null,
-    market: null,
+    market: [],
     errors: null
 }
 

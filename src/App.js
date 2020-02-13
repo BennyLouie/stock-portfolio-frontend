@@ -29,7 +29,7 @@ class App extends React.Component {
   }
   
   render() {
-    console.log(typeof(this.props.errors) === 'string')
+    console.log(typeof (this.props.errors) === 'string')
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
