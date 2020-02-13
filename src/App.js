@@ -4,7 +4,7 @@ import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from './components/SignIn'
 import { loadUser, fetchUser } from './thunks'
-import Portfolio from './components/Portfolio';
+import HomePage from './components/HomePage';
 
 const mapStateToProps = state => {
   return {
@@ -42,7 +42,7 @@ class App extends React.Component {
           </div>
         ) : null}
         <Switch>
-          <Route exact path='/' render={props => <Portfolio {...this.props}/>} />
+          <Route exact path='/' render={props => <HomePage user={this.props.user} stocks={this.props.stocks} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}
