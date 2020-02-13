@@ -4,7 +4,7 @@ import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from './components/SignIn'
 import { loadUser, fetchUser } from './thunks'
-import HomePage from './components/HomePage';
+import HomePage from './containers/HomePage';
 
 const mapStateToProps = state => {
   return {
