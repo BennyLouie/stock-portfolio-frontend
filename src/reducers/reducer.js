@@ -1,15 +1,17 @@
 const initialState = {
     user: null,
-    token: null
+    token: null,
+    stocks: null
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "LOAD_USER":
+        case "GET_USER":
             return {
                 ...state,
                 token: action.payload.token,
-                user: action.payload.user
+                user: action.payload.user,
+                stocks: action.payload.stocks
             }
         default: 
             return {
