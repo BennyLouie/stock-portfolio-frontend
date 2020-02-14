@@ -100,6 +100,7 @@ export const fetchUser = evt => dispatch => {
         })
 }
 
+//Buying Stocks
 export const buyStock = evt => dispatch => {
     evt.preventDefault()
     // console.log(evt.target.user_id.value)
