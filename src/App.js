@@ -30,7 +30,7 @@ class App extends React.Component {
   }
   
   render() {
-    // console.log(this.props.user.balance)
+    console.log(this.props.stocks)
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -43,7 +43,7 @@ class App extends React.Component {
           </div>
         ) : null}
         <Switch>
-          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} />} />
+          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}

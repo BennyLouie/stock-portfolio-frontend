@@ -4,10 +4,11 @@ import ActiveStocks from './ActiveStocks'
 import CheckOut from '../components/CheckOut'
 
 export default function HomePage(props) {
+    console.log(props)
     return (
         <div className='homepage'>
             <ActiveStocks market={props.market} />
-            <CheckOut user={props.user} buyStock={props.buyStock} />
+            <CheckOut user={props.user} buyStock={props.buyStock} purchaseComplete={props.purchaseComplete} />
         </div>
     )
 }

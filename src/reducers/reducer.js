@@ -1,7 +1,8 @@
 const initialState = {
     user: {},
-    stocks: null,
+    stocks: {},
     market: [],
+    purchase_complete: null,
     errors: null
 }
 
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 market: action.payload.market
+            }
+        case "BUY_STOCK":
+            return {
+                ...state,
+                purchase_complete: action.payload.purchase_complete
             }
         default: 
             return {

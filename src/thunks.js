@@ -95,7 +95,7 @@ export const fetchUser = evt => dispatch => {
 
 export const buyStock = evt => dispatch => {
     evt.preventDefault()
-    console.log(evt.target.user_id.value)
+    // console.log(evt.target.user_id.value)
     const stock = evt.target.stock.value.toUpperCase()
     const user_id = evt.target.user_id.value
     const quantity = evt.target.quantity.value
@@ -107,24 +107,49 @@ export const buyStock = evt => dispatch => {
                 return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                         .then(resp => resp.json())
                         .then(data => {
-                            const price = data.asks[0].price
-                            fetch('http://localhost:3000/transactions', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    user_id,
-                                    stock,
-                                    price,
-                                    quantity
+                            let price
+                            if (data.asks.length === 0) {
+                                dispatch({
+                                    type: 'BUY_STOCK',
+                                    payload: {
+                                        purchase_complete: 'Sorry, This Stock is Unavailable at the Moment'
+                                    }
                                 })
-                            })
-                                .then(resp => resp.json())
-                                .then(data => {
-                                console.log(data)
-                            })
+                            }
+                            else {
+                                fetch('http://localhost:3000/transactions', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        user_id,
+                                        stock,
+                                        price,
+                                        quantity
+                                    })
+                                })
+                                    .then(resp => resp.json())
+                                    .then(data => {
+                                        console.log(data)
+                                        dispatch({
+                                            type: 'BUY_STOCK',
+                                            payload: {
+                                                purchase_complete: 'Purchase Complete!'
+                                            }
+                                    })
+                                })
+                            }
+                            
+                })
+            }
+            else {
+                dispatch({
+                    type: 'BUY_STOCK',
+                    payload: {
+                        purchase_complete: 'We are unable to find the Stock you are looking for'
+                    }
                 })
             }
             
