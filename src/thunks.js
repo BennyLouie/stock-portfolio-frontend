@@ -26,8 +26,13 @@ export const loadUser = () => dispatch => {
                             let stockInfo = {}
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
-                            stockInfo.availableShares = m.iexAskSize
-                            stockInfo.stockPrice = m.iexAskPrice
+                            if (m.iexAskPrice == 0 || m.iexAskSize == 0) {
+                                stockInfo.availableShares = m.iexRealtimeSize
+                                stockInfo.stockPrice = m.iexRealtimePrice
+                            } else {
+                                stockInfo.availableShares = m.iexAskSize
+                                stockInfo.stockPrice = m.iexAskPrice
+                            }
                             return parsedMarket.push(stockInfo)
                         })
                         dispatch({
