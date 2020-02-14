@@ -5,7 +5,7 @@ import CheckOut from '../components/CheckOut'
 
 export default function HomePage(props) {
     return (
-        <div className='HomePage'>
+        <div className='homepage'>
             <ActiveStocks market={props.market} />
             <CheckOut user={props.user} />
         </div>
