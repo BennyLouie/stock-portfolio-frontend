@@ -10,6 +10,7 @@ export default function CheckOut(props) {
                     :
                     <form class='checkout' onSubmit={props.buyStock}>
                         <h1>Cash ${props.user.balance}</h1>
+                        <input type='hidden' name='balance' value={props.user.balance} />
                         <input type='hidden' name='user_id' value={props.user.id} />
                         <label>
                             <strong>Ticker Symbol</strong>
