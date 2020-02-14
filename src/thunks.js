@@ -27,7 +27,7 @@ export const loadUser = () => dispatch => {
                             stockInfo.name = m.companyName
                             stockInfo.availableShares = m.iexAskSize
                             stockInfo.stockPrice = m.iexAskPrice
-                            parsedMarket.push(stockInfo)
+                            return parsedMarket.push(stockInfo)
                         })
                         dispatch({
                             type: "GET_MARKET",

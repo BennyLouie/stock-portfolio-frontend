@@ -5,7 +5,7 @@ export default function CheckOut(props) {
     return (
         <div className='form'>
             <form>
-                <h1>Cash ${}</h1>
+                <h1>Cash ${props.user.balance}</h1>
             </form>
         </div>
     )
