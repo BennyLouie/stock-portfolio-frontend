@@ -3,7 +3,7 @@ import './App.css';
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from './components/SignIn'
-import { loadUser, fetchUser } from './thunks'
+import { loadUser, fetchUser, buyStock } from './thunks'
 import HomePage from './containers/HomePage';
 
 const mapStateToProps = state => {
@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   loadUser,
-  fetchUser
+  fetchUser,
+  buyStock
 }
 
 class App extends React.Component {
@@ -42,7 +43,7 @@ class App extends React.Component {
           </div>
         ) : null}
         <Switch>
-          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} />} />
+          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}

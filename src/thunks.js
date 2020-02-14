@@ -93,3 +93,40 @@ export const fetchUser = evt => dispatch => {
         })
 }
 
+export const buyStock = evt => dispatch => {
+    evt.preventDefault()
+    console.log(evt.target.user_id.value)
+    const stock = evt.target.stock.value.toUpperCase()
+    const user_id = evt.target.user_id.value
+    const quantity = evt.target.quantity.value
+    return fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
+        .then(resp => resp.json())
+        .then(data => {
+            const symbols = data.map(s => s.symbol)
+            if (symbols.includes(stock)) {
+                return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                        .then(resp => resp.json())
+                        .then(data => {
+                            const price = data.asks[0].price
+                            fetch('http://localhost:3000/transactions', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    user_id,
+                                    stock,
+                                    price,
+                                    quantity
+                                })
+                            })
+                                .then(resp => resp.json())
+                                .then(data => {
+                                console.log(data)
+                            })
+                })
+            }
+            
+    })
+}

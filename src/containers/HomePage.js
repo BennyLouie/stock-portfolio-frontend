@@ -7,7 +7,7 @@ export default function HomePage(props) {
     return (
         <div className='homepage'>
             <ActiveStocks market={props.market} />
-            <CheckOut user={props.user} />
+            <CheckOut user={props.user} buyStock={props.buyStock} />
         </div>
     )
 }
