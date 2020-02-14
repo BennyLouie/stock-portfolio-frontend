@@ -109,11 +109,11 @@ export const buyStock = evt => dispatch => {
                 return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                         .then(resp => resp.json())
                         .then(data => {
-                            if (data.asks.length !== 0 || data.asks['size'] < quantity) { //Temporary Change, Should check if the number of shares is valid
+                            if (data.asks.length !== 0 || data.asks['size'] < quantity || Math.round(quantity) !== quantity) { //Temporary Change, Should check if the number of shares is valid
                                 dispatch({
                                     type: 'BUY_STOCK',
                                     payload: {
-                                        purchase_complete: 'Sorry, This Stock is Unavailable at the Moment'
+                                        purchase_complete: 'Invalid Transaction'
                                     }
                                 })
                             }
