@@ -1,6 +1,6 @@
 const initialState = {
     user: {},
-    stocks: {},
+    stocks: [],
     transactions: [],
     market: [],
     purchase_complete: null,

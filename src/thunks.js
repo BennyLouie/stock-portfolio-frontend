@@ -10,6 +10,20 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
+                let stockData = Object.keys(data.stocks).map(s => {
+                    console.log(s)
+                    let stock = {}
+                    fetch(`https://sandbox.iexapis.com/stable/stock/${s.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                        .then(resp => resp.json())
+                        .then(info => {
+                            stock.quote = info
+                            stock.shares = data.stocks[s]
+                        })
+                    // console.log(stock)
+                    return stock
+                })
+                //Work in Progress...
+                console.log(stockData)
                 dispatch({
                   type: "GET_USER",
                   payload: {
