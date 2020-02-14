@@ -18,7 +18,7 @@ export default function CheckOut(props) {
                         </label>
                         <label>
                             <strong>Quantity</strong>
-                            <input type='text' name='quantity' />
+                            <input type='number' name='quantity' />
                         </label>
                         <br />
                         <input type='submit' value='Buy' />

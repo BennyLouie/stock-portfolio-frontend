@@ -111,7 +111,7 @@ export const buyStock = evt => dispatch => {
                 return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                         .then(resp => resp.json())
                         .then(data => {
-                            if (data.asks.length !== 0 || data.asks['size'] < quantity || Math.round(quantity) !== quantity) { //Temporary Change, Should check if the number of shares is valid
+                            if (data.asks['size'] < quantity || Math.round(quantity) != quantity) { //Temporary Change, Should check if the number of shares is valid
                                 dispatch({
                                     type: 'BUY_STOCK',
                                     payload: {
@@ -120,8 +120,21 @@ export const buyStock = evt => dispatch => {
                                 })
                             }
                             else {
-                                // let price = data.asks[0].price * quantity
-                                let price = data.quote.latestPrice * quantity
+                                let price
+                                if (data.asks.length === 0) {
+                                    price = data.quote.latestPrice * quantity
+                                    if (data.iexRealtimeSize < quantity) {
+                                        dispatch({
+                                            type: 'BUY_STOCK',
+                                            payload: {
+                                                purchase_complete: 'Invalid Transaction'
+                                            }
+                                        })
+                                    }
+                                }
+                                else {
+                                    price = data.asks[0].price * quantity
+                                }
                                 return fetch('http://localhost:3000/transactions', {
                                             method: 'POST',
                                             headers: {
