@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import { withRouter, Switch, Route, Redirect } from "react-router-dom";
+import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from './components/SignIn'
 import { loadUser, fetchUser, buyStock } from './thunks'
-import HomePage from './containers/HomePage';
+import HomePage from './containers/HomePage'
+import Portfolio from './containers/Portfolio'
+import Transactions from './containers/Transactions'
 
 const mapStateToProps = state => {
   return {
@@ -30,7 +32,7 @@ class App extends React.Component {
   }
   
   render() {
-    console.log(this.props.stocks)
+    console.log(this.props.transactions)
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -44,11 +46,16 @@ class App extends React.Component {
         ) : null}
         <div>
           <h1>Stock Portfolio App</h1>
-          
+          <div className='links'>
+            <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink>
+            <NavLink to='/transactions'><strong>Transactions</strong></NavLink>
+          </div>
         </div>
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
+          <Route path='/portfolio' render={props => <Portfolio />} />
+          <Route path='/transactions' render={props => <Transactions transactions={this.props.transactions} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}
       </div>

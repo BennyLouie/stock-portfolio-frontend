@@ -1,6 +1,7 @@
 const initialState = {
     user: {},
     stocks: {},
+    transactions: [],
     market: [],
     purchase_complete: null,
     errors: null
@@ -18,6 +19,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload.user,
                 stocks: action.payload.stocks,
+                transactions: action.payload.transactions,
                 errors: null
             }
         case "GET_MARKET":

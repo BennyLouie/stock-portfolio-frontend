@@ -14,7 +14,8 @@ export const loadUser = () => dispatch => {
                   type: "GET_USER",
                   payload: {
                         user: data.user,
-                        stocks: data.stocks
+                        stocks: data.stocks,
+                        transactions: data.transactions
                   }
                 })
                 return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
@@ -68,7 +69,8 @@ export const fetchUser = evt => dispatch => {
                     type: "GET_USER",
                     payload: {
                         user: data.user,
-                        stocks: data.stocks
+                        stocks: data.stocks,
+                        transactions: data.transactions
                     }
                 })
                 return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
