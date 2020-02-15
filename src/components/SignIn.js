@@ -5,8 +5,7 @@ export default class SignIn extends React.Component {
     render() {
       // console.log(this.props)
         return (
-            <div className="div-form">
-        <form className='display-near-top form-render' onSubmit={this.props.fetchUser}>
+        <form className='ui form' onSubmit={this.props.fetchUser}>
           <h1>LOG IN</h1>
           {this.props.error ? (
             <>
@@ -14,27 +13,15 @@ export default class SignIn extends React.Component {
             </>
           ) : null}
           <label>
-            <strong>Email:</strong>
-            <input
-              type="text"
-              name="email"
-            />
+            <strong>Email</strong>
+            <input type="text" name="email" placeholder='example@gmail.com' />
           </label>
           <label>
-            <strong>Password:</strong>
-            <input
-              type="password"
-              name="password"
-            />
+            <strong>Password</strong>
+            <input type="password" name="password" placeholder='Insert Password' />
           </label>
-          <br/>
-          <input type="submit" value="Log In" className="post bold center btn" />
-          <NavLink to="/signup" className="patch btn">
-            <strong>Sign Up</strong>
-          </NavLink>
-          <br />
+          <button type="submit" className="ui button">Log In</button>
         </form>
-      </div>
         )
     }
 }

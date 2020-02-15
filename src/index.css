@@ -103,3 +103,13 @@ html {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+
+/* SignIn Page CSS */
+
+.form-center {
+  justify-content: center;
+}
+
+.signup-form {
+  margin-top: 300px;
+}
