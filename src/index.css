@@ -35,7 +35,7 @@ html {
 
 /* HomePage CSS */
 
-.homepage {
+.displaypage {
   margin: 0;
   height: 100%;
   padding: 0;
@@ -45,7 +45,7 @@ html {
 }
 
 /* Market of Stocks Display */
-.market {
+.stocksdisplay {
   border: solid;
   position: absolute;
   left: 0px;

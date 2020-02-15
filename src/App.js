@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import SignIn from './components/SignIn'
 import { loadUser, fetchUser, buyStock } from './thunks'
 import HomePage from './pathRenderings/HomePage'
-import Portfolio from './containers/Portfolio'
+import PortfolioPage from './pathRenderings/PortfolioPage'
 import Transactions from './containers/Transactions'
 
 const mapStateToProps = state => {
@@ -54,7 +54,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
-          <Route path='/portfolio' render={props => <Portfolio stocks={this.props.stocks} />} />
+          <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <Transactions transactions={this.props.transactions} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}

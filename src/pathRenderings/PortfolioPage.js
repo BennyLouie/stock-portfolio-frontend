@@ -1,13 +1,12 @@
 import React from 'react'
-import { NavLink } from "react-router-dom"
-import ActiveStocks from '../containers/ActiveStocks'
+import Portfolio from '../containers/Portfolio'
 import CheckOut from '../components/CheckOut'
 
-export default function HomePage(props) {
-    // console.log(props)
+export default function PortfolioPage(props) {
+
     return (
         <div className='displaypage'>
-            <ActiveStocks market={props.market} />
+            <Portfolio stocks={props.stocks} />
             <CheckOut user={props.user} buyStock={props.buyStock} purchaseComplete={props.purchaseComplete} />
         </div>
     )
