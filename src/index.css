@@ -33,6 +33,20 @@ html {
   padding: 0;
 }
 
+/* Color Changing */
+
+[data-status="red"] {
+  color: red;
+}
+
+[data-status="green"] {
+  color: green;
+}
+
+[data-status="grey"] {
+  color: grey
+}
+
 /* Banner (Top of Each Page) CSS */
 
 .banner {
