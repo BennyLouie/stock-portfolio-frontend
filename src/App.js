@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, buyStock } from './thunks'
+import { loadUser, fetchUser, buyStock, signUp } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -18,7 +18,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   loadUser,
   fetchUser,
-  buyStock
+  buyStock,
+  signUp
 }
 
 class App extends React.Component {
@@ -27,11 +28,6 @@ class App extends React.Component {
     this.props.loadUser()
   }
 
-  fetchUser = evt => {
-    evt.preventDefault()
-    this.props.fetchUser(evt)
-  }
-  
   render() {
     console.log(this.props)
     return (
@@ -56,8 +52,8 @@ class App extends React.Component {
         </div> : null}
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
-          <Route path='/signin' render={props => <SignInPage fetchUser={this.fetchUser} />} />
-          <Route path='/signup' render={props => <SignUpPage />} />
+          <Route path='/signin' render={props => <SignInPage fetchUser={this.props.fetchUser} />} />
+          <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} />} />
           <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />
         </Switch>
