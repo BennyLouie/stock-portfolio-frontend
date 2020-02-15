@@ -46,21 +46,27 @@ html {
 
 /* Market of Stocks Display */
 .stocksdisplay {
-  border: solid;
+  /* border: solid; */
   position: absolute;
-  left: 0px;
+  left: 10px;
   width: 50%;
+  align-self: center;
+  /* margin-bottom: 50px !important; */
   /* margin-top: 50px; */
   /* background-color: beige; */
 }
 
-.stock {
+/* .stock {
   border: solid;
 
-}
+} */
 
 /* CheckOut Form CSS */
 
-/* .form {
-  margin-right: auto;
-} */
+.form {
+  margin-top: 250px;
+}
+
+.checkout {
+  margin-right: 10px;
+}
