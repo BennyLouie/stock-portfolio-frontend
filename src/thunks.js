@@ -10,7 +10,7 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
-                console.log(data.stocks)
+                // console.log(data.stocks)
                 dispatch({
                   type: "GET_USER",
                   payload: {

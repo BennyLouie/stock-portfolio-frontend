@@ -54,7 +54,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
-          <Route path='/portfolio' render={props => <Portfolio />} />
+          <Route path='/portfolio' render={props => <Portfolio stocks={this.props.stocks} />} />
           <Route path='/transactions' render={props => <Transactions transactions={this.props.transactions} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}
