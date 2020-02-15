@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function CheckOut(props) {
-    console.log(props.user)
+    // console.log(props.user)
     // let user = props.user
     return (
         <div className='form'>
