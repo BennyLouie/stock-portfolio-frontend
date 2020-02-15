@@ -51,6 +51,7 @@ class App extends React.Component {
             <NavLink to='/transactions'><strong>Transactions</strong></NavLink>
           </div>
         </div>
+        <br/>
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
