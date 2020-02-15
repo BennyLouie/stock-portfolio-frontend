@@ -1,17 +1,16 @@
 import React from 'react'
 
 export default function CheckOut(props) {
-    // console.log(props.user)
+    console.log(props.user)
+    // let user = props.user
     return (
         <div className='form'>
             {
                 props.purchaseComplete ?
                     <h1>{props.purchaseComplete}</h1>
                     :
-                    <form class='checkout' onSubmit={props.buyStock}>
+                    <form class='checkout' onSubmit={(evt, user) => props.buyStock(evt, props.user)}>
                         <h1>Cash ${props.user.balance}</h1>
-                        <input type='hidden' name='balance' value={props.user.balance} />
-                        <input type='hidden' name='user_id' value={props.user.id} />
                         <label>
                             <strong>Ticker Symbol</strong>
                             <input type='text' name='stock' /> 

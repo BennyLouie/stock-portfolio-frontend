@@ -102,13 +102,13 @@ export const fetchUser = evt => dispatch => {
 }
 
 //Buying Stocks
-export const buyStock = evt => dispatch => {
+export const buyStock = (evt, user) => dispatch => {
     evt.preventDefault()
-    // console.log(evt.target.user_id.value)
+    // console.log(user)
     const stock = evt.target.stock.value.toUpperCase()
-    const user_id = evt.target.user_id.value
+    const user_id = user.id
     const quantity = evt.target.quantity.value
-    let balance = evt.target.balance.value
+    let balance = user.balance
 
     return fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
         .then(resp => resp.json())
