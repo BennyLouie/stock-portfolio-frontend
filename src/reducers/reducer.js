@@ -32,6 +32,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 purchase_complete: action.payload.purchase_complete
             }
+        case "SIGN_UP":
+            return {
+                ...state,
+                user: action.payload.user
+            }
         default: 
             return {
                 ...state
