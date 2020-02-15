@@ -5,7 +5,8 @@ export default function Portfolio(props) {
     console.log(props)
     return (
         <div className='stocksdisplay'>
-            <div className='stockscontainer ui cards'>
+            <h1 className='title'>Portfolio</h1>
+            <div className='stockscontainer below-title ui cards'>
                 { props.stocks.map((stock, idx) => <MyStock key={idx} {...stock}  />)}
             </div>
         </div>

@@ -43,7 +43,7 @@ class App extends React.Component {
           </div>
         ) : null} */}
         {localStorage.token ? <div className='banner'>
-          <h1 className='appName'>Stock Portfolio App</h1>
+          <h1 className='appName'><NavLink to="">Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
             <div className="links">
               <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink> |

@@ -5,7 +5,8 @@ export default function ActiveStocks(props) {
     // console.log(props)
     return (
         <div className='stocksdisplay'>
-            <div className='stockscontainer ui cards'>
+            <h1 className='title'>Most Active Stocks</h1>
+            <div className='stockscontainer below-title ui cards'>
                 {props.market.map( (stock, idx) => <Stock key={idx} {...stock} />)}
             </div>
         </div>
