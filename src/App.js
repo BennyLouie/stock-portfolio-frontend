@@ -4,7 +4,7 @@ import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from './components/SignIn'
 import { loadUser, fetchUser, buyStock } from './thunks'
-import HomePage from './containers/HomePage'
+import HomePage from './pathRenderings/HomePage'
 import Portfolio from './containers/Portfolio'
 import Transactions from './containers/Transactions'
 

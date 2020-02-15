@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
-import ActiveStocks from './ActiveStocks'
+import ActiveStocks from '../containers/ActiveStocks'
 import CheckOut from '../components/CheckOut'
 
 export default function HomePage(props) {
