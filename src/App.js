@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import SignInPage from './pathRenderings/SignInPage'
 import { loadUser, fetchUser, buyStock } from './thunks'
+import SignInPage from './pathRenderings/SignInPage'
+import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
 import PortfolioPage from './pathRenderings/PortfolioPage'
 import TransactionsPage from './pathRenderings/TransactionsPage'
@@ -56,6 +57,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignInPage fetchUser={this.fetchUser} />} />
+          <Route path='/signup' render={props => <SignUpPage />} />
           <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />
         </Switch>
