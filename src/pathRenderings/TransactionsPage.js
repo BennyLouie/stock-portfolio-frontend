@@ -5,7 +5,7 @@ import Transactions from '../containers/Transactions'
 export default function TransactionsPage(props) {
     console.log(props)
     return (
-        <div className='stocksdisplay'>
+        <div className='displaypage'>
             <Transactions transactions={props.transactions} />
         </div>
     )

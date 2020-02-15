@@ -32,7 +32,7 @@ class App extends React.Component {
   }
   
   render() {
-    // console.log(this.props)
+    console.log(this.props)
     return (
       <div className="App">
         {/* {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -44,13 +44,15 @@ class App extends React.Component {
             {this.props.errors.map(error => <h2 className='error'>{ error }</h2>)}
           </div>
         ) : null} */}
-        <div className='banner'>
+        {localStorage.token ? <div className='banner'>
           <h1 className='appName'>Stock Portfolio App</h1>
-          <div className='links'>
-            <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink>
-            <NavLink to='/transactions'><strong>Transactions</strong></NavLink>
+          <div className='links-container'>
+            <div className="links">
+              <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink> |
+              <NavLink to='/transactions'><strong>Transactions</strong></NavLink>
+            </div>
           </div>
-        </div>
+        </div> : null}
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignIn fetchUser={this.fetchUser} />} />
