@@ -33,7 +33,16 @@ html {
   padding: 0;
 }
 
-/* HomePage CSS */
+/* Banner (Top of Each Page) CSS */
+
+.banner {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* DisplayPage CSS */
 
 .displaypage {
   margin: 0;
@@ -48,25 +57,44 @@ html {
 .stocksdisplay {
   /* border: solid; */
   position: absolute;
-  left: 10px;
+  left: 0px;
   width: 50%;
-  align-self: center;
+  height: 100%;
+  display: flex;
+  /* align-self: center; */
   /* margin-bottom: 50px !important; */
   /* margin-top: 50px; */
   /* background-color: beige; */
 }
 
-/* .stock {
-  border: solid;
+.stockscontainer {
+  height: 500px;
+  width: 500px;
+  align-self: center;
+  overflow: visible;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 
-} */
+.stock {
+  height: 25px;
+}
 
 /* CheckOut Form CSS */
 
-.form {
-  margin-top: 250px;
+.checkout {
+  /* margin-top: 250px; */
+  position: absolute;
+  /* right: 10px; */
+  width: 50%;
+  height: 100%;
+  display: flex;
 }
 
-.checkout {
-  margin-right: 10px;
+.customform {
+  width: 500px;
+  height: 500px;
+  align-self: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }

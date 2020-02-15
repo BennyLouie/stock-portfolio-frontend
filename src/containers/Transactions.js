@@ -4,10 +4,10 @@ import Transaction from '../components/Transaction'
 export default function Transactions(props) {
     // console.log(props)
     return (
-        <div className='transactions'>
-            {
-                props.transactions.map( (t, idx) => <Transaction key={idx} {...t} />)
-            }
+        <div className='stocksdisplay'>
+            <div className='stockscontainer ui cards'>
+                {props.transactions.map( (t, idx) => <Transaction key={idx} {...t} />)}
+            </div>
         </div>
     )
 }
