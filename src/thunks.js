@@ -27,6 +27,7 @@ export const loadUser = () => dispatch => {
                             let stockInfo = {}
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
+                            stockInfo.opening_price = m.open
                             // console.log(m)
                             if (m.iexRealtimeSize) {
                                 if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
@@ -38,8 +39,8 @@ export const loadUser = () => dispatch => {
                                 }
                             }
                             else {
-                                stockInfo.stockPrice = m.latestPrice
                                 stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
+                                stockInfo.stockPrice = m.latestPrice
                             }
                             return parsedMarket.push(stockInfo)
                         })
