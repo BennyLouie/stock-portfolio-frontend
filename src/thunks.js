@@ -27,12 +27,19 @@ export const loadUser = () => dispatch => {
                             let stockInfo = {}
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
-                            if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
+                            // console.log(m)
+                            if (m.iexRealtimeSize) {
+                                if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
                                 stockInfo.availableShares = m.iexRealtimeSize
                                 stockInfo.stockPrice = m.iexRealtimePrice
                             } else {
                                 stockInfo.availableShares = m.iexAskSize
                                 stockInfo.stockPrice = m.iexAskPrice
+                                }
+                            }
+                            else {
+                                stockInfo.stockPrice = m.latestPrice
+                                stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
                             }
                             return parsedMarket.push(stockInfo)
                         })

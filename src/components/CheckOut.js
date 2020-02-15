@@ -9,7 +9,7 @@ export default function CheckOut(props) {
                 props.purchaseComplete ?
                     <h1>{props.purchaseComplete}</h1>
                     :
-                    <form class='checkout' onSubmit={(evt, user) => props.buyStock(evt, props.user)}>
+                    <form className='checkout' onSubmit={(evt, user) => props.buyStock(evt, props.user)}>
                         <h1>Cash ${props.user.balance}</h1>
                         <label>
                             <strong>Ticker Symbol</strong>
