@@ -289,3 +289,11 @@ export const signUp = evt => dispatch => {
             }
     })
 }
+
+// LogOut
+export const logOut = () => dispatch => {
+    localStorage.clear()
+    dispatch({
+        type: 'LOGOUT'
+    })
+}

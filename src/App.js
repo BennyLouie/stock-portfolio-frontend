@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, buyStock, signUp } from './thunks'
+import { loadUser, fetchUser, buyStock, signUp, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -19,7 +19,8 @@ const mapDispatchToProps = {
   loadUser,
   fetchUser,
   buyStock,
-  signUp
+  signUp,
+  logOut
 }
 
 class App extends React.Component {
@@ -46,7 +47,8 @@ class App extends React.Component {
           <div className='links-container'>
             <div className="links">
               <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink> |
-              <NavLink to='/transactions'><strong>Transactions</strong></NavLink>
+              <NavLink to='/transactions'><strong>Transactions</strong></NavLink> |
+              <NavLink to='/signin' onClick={this.props.logOut}><strong>Log Out</strong></NavLink>
             </div>
           </div>
         </div> : null}
