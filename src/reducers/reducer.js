@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
             }
         case "LOGOUT":
             return {
-                initialState
+                ...initialState
             }
         default: 
             return {
