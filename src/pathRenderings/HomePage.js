@@ -7,7 +7,7 @@ export default function HomePage(props) {
     // console.log(props)
     return (
         <div className='displaypage'>
-            <ActiveStocks market={props.market} />
+            <ActiveStocks market={props.market} stocks={props.stocks} />
             <CheckOut user={props.user} buyStock={props.buyStock} purchaseComplete={props.purchaseComplete} />
         </div>
     )

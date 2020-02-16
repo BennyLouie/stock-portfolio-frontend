@@ -181,11 +181,13 @@ export const buyStock = (evt, user) => dispatch => {
                                             }
                                             else {
                                                 balance -= price
+                                                const token = localStorage.getItem("token")
                                                 return fetch(`http://localhost:3000/users/${user_id}`, {
                                                     method: 'PATCH',
                                                     headers: {
                                                         'Content-type': 'application/json',
-                                                        'Accept': 'application/json'
+                                                        'Accept': 'application/json',
+                                                        'Authorization': `Bearer ${token}`
                                                     },
                                                     body: JSON.stringify({
                                                         balance

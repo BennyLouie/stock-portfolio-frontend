@@ -9,7 +9,7 @@ export default function CheckOut(props) {
                 <h1>{props.purchaseComplete}</h1>
                 :
                 <form className='ui form customform' onSubmit={(evt, user) => props.buyStock(evt, props.user)}>
-                    <h1>Cash ${props.user.balance}</h1>
+                    <h1>Cash ${(Math.round(props.user.balance * 100) / 100).toFixed(2)}</h1>
                     <div className='field'>
                         <label>Ticker Symbol</label>
                         <input type='text' name='stock' /> 

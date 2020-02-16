@@ -31,7 +31,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.errors)
+    // console.log(this.props)
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -56,7 +56,7 @@ class App extends React.Component {
           </div>
         </div> : null}
         <Switch>
-          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
+          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} stocks={this.props.stocks} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignInPage fetchUser={this.props.fetchUser} clearErrors={this.props.clearErrors} />} />
           <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} clearErrors={this.props.clearErrors} />} />
           <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
