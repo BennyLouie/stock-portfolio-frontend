@@ -126,92 +126,88 @@ export const buyStock = (evt, user) => dispatch => {
     const stock = evt.target.stock.value.toUpperCase()
     const user_id = user.id
     const quantity = evt.target.quantity.value
+    const symbols = user.valid_symbols
     let balance = user.balance
 
-    return fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
-        .then(resp => resp.json())
-        .then(data => {
-            const symbols = data.map(s => s.symbol)
-            if (symbols.includes(stock)) {
-                return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
-                        .then(resp => resp.json())
-                        .then(data => {
-                            let price
-                            if (data.asks.length === 0) {
-                                price = data.quote.latestPrice * quantity
-                                if (data.iexRealtimeSize < quantity) {
-                                    dispatch({
-                                        type: 'BUY_STOCK',
-                                        payload: {
-                                            purchase_complete: 'Invalid Transaction'
-                                        }
-                                    })
+    if (symbols.includes(stock)) {
+        return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                .then(resp => resp.json())
+                .then(data => {
+                    let price
+                    if (data.asks.length === 0) {
+                        price = data.quote.latestPrice * quantity
+                        if (data.iexRealtimeSize < quantity) {
+                            dispatch({
+                                type: 'BUY_STOCK',
+                                payload: {
+                                    purchase_complete: 'Invalid Transaction'
                                 }
-                            }
-                            else {
-                                price = data.asks[0].price * quantity
-                            }
-                            return fetch('http://localhost:3000/transactions', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            user_id,
-                                            stock,
-                                            price,
-                                            quantity
-                                        })
-                                    })
-                                        .then(resp => resp.json())
-                                        .then(data => {
-                                            if (data.errors) {
-                                                dispatch({
-                                                    type: 'BUY_STOCK',
-                                                    payload: {
-                                                        purchase_complete: data.errors
-                                                    }
-                                                })
-                                            }
-                                            else {
-                                                balance -= price
-                                                const token = localStorage.getItem("token")
-                                                return fetch(`http://localhost:3000/users/${user_id}`, {
-                                                    method: 'PATCH',
-                                                    headers: {
-                                                        'Content-type': 'application/json',
-                                                        'Accept': 'application/json',
-                                                        'Authorization': `Bearer ${token}`
-                                                    },
-                                                    body: JSON.stringify({
-                                                        balance
-                                                    })
-                                                })
-                                                    .then(resp => resp.json())
-                                                    .then(data => {
-                                                    dispatch({
-                                                        type: 'BUY_STOCK',
-                                                        payload: {
-                                                            purchase_complete: 'Purchase Complete!'
-                                                        }
-                                                    })
-                                                })
-                                            }
-                                    })
-                            
-                })
-            }
-            else {
-                dispatch({
-                    type: 'BUY_STOCK',
-                    payload: {
-                        purchase_complete: 'We are unable to find the Stock you are looking for'
+                            })
+                        }
                     }
-                })
+                    else {
+                        price = data.asks[0].price * quantity
+                    }
+                    return fetch('http://localhost:3000/transactions', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    user_id,
+                                    stock,
+                                    price,
+                                    quantity
+                                })
+                            })
+                                .then(resp => resp.json())
+                                .then(data => {
+                                    if (data.errors) {
+                                        dispatch({
+                                            type: 'BUY_STOCK',
+                                            payload: {
+                                                purchase_complete: data.errors
+                                            }
+                                        })
+                                    }
+                                    else {
+                                        balance -= price
+                                        const token = localStorage.getItem("token")
+                                        return fetch(`http://localhost:3000/users/${user_id}`, {
+                                            method: 'PATCH',
+                                            headers: {
+                                                'Content-type': 'application/json',
+                                                'Accept': 'application/json',
+                                                'Authorization': `Bearer ${token}`
+                                            },
+                                            body: JSON.stringify({
+                                                balance
+                                            })
+                                        })
+                                            .then(resp => resp.json())
+                                            .then(data => {
+                                            dispatch({
+                                                type: 'BUY_STOCK',
+                                                payload: {
+                                                    purchase_complete: 'Purchase Complete!'
+                                                }
+                                            })
+                                        })
+                                    }
+                            })
+                    
+        })
+    }
+    else {
+        dispatch({
+            type: 'BUY_STOCK',
+            payload: {
+                purchase_complete: 'We are unable to find the Stock you are looking for'
             }
-            
-    })
+        })
+    }
+        
 }
 
 // Signing Up
