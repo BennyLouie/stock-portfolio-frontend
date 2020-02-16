@@ -218,7 +218,12 @@ export const signUp = evt => dispatch => {
     const email = evt.target.email.value
     const password = evt.target.password.value
     const balance = 5000.00
-
+    let valid_symbols = []
+    fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
+        .then(resp => resp.json())
+        .then(data => {
+            data.forEach(s => valid_symbols.push(s.symbol))
+    })
     return fetch("http://localhost:3000/users", {
         method: 'POST',
         headers: {
@@ -228,6 +233,7 @@ export const signUp = evt => dispatch => {
         body: JSON.stringify({
             first_name,
             last_name,
+            valid_symbols,
             email,
             password,
             balance
