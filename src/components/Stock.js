@@ -23,7 +23,6 @@ function owned(name, stockNames) {
 }
 
 export default function Stock(props) {
-    console.log(owned(props.symbol, props.stockNames))
 
     return (
         <div className="stock ui fluid card">

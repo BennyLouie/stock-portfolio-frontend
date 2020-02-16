@@ -99,7 +99,6 @@ html, body {
   display: flex;
   flex-direction: column;
   border-right: solid;
-  /* justify-content: space-evenly; */
 }
 
 .stockscontainer {

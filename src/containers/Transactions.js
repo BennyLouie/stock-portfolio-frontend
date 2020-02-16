@@ -2,7 +2,6 @@ import React from 'react'
 import Transaction from '../components/Transaction'
 
 export default function Transactions(props) {
-    // console.log(props)
     return (
         <div className='stocksdisplay'>
             <h1 className='title'>Transactions</h1>

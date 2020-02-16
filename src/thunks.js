@@ -1,7 +1,6 @@
 //Auto Login with localStorage token
 export const loadUser = () => dispatch => {
     const token = localStorage.getItem("token")
-    // console.log(token)
     if (token) {
         return fetch("http://localhost:3000/auto_login", {
             headers: {
@@ -10,7 +9,6 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
-                // console.log(data.stocks)
                 dispatch({
                   type: "GET_USER",
                   payload: {
@@ -28,7 +26,6 @@ export const loadUser = () => dispatch => {
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
                             stockInfo.opening_price = m.open
-                            // console.log(m)
                             if (m.iexRealtimeSize) {
                                 if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
                                 stockInfo.availableShares = m.iexRealtimeSize
@@ -96,7 +93,6 @@ export const fetchUser = evt => dispatch => {
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
                             stockInfo.opening_price = m.open
-                            // console.log(m)
                             if (m.iexRealtimeSize) {
                                 if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
                                 stockInfo.availableShares = m.iexRealtimeSize
@@ -170,7 +166,6 @@ export const buyStock = (evt, user) => dispatch => {
                                     })
                                         .then(resp => resp.json())
                                         .then(data => {
-                                            console.log(data)
                                             if (data.errors) {
                                                 dispatch({
                                                     type: 'BUY_STOCK',
@@ -195,7 +190,6 @@ export const buyStock = (evt, user) => dispatch => {
                                                 })
                                                     .then(resp => resp.json())
                                                     .then(data => {
-                                                    console.log(data)
                                                     dispatch({
                                                         type: 'BUY_STOCK',
                                                         payload: {
@@ -245,7 +239,6 @@ export const signUp = evt => dispatch => {
     })
         .then(resp => resp.json())
         .then(data => {
-            console.log(data.errors)
             if (data.errors) {
                 dispatch({
                     type: 'ERRORS',
@@ -264,7 +257,6 @@ export const signUp = evt => dispatch => {
                 })
             .then(resp => resp.json())
             .then(data => {
-                // console.log(data.stocks)
                 dispatch({
                   type: "GET_USER",
                   payload: {
@@ -281,7 +273,6 @@ export const signUp = evt => dispatch => {
                             let stockInfo = {}
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
-                            // console.log(m)
                             if (m.iexRealtimeSize) {
                                 if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
                                 stockInfo.availableShares = m.iexRealtimeSize
