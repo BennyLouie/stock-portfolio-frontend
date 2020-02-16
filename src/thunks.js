@@ -243,11 +243,13 @@ export const signUp = evt => dispatch => {
     })
         .then(resp => resp.json())
         .then(data => {
-            // console.log(data)
+            console.log(data.errors)
             if (data.errors) {
                 dispatch({
                     type: 'ERRORS',
-                    payload: data.errors
+                    payload: {
+                        errors: data.errors
+                    }
                 })
             }
             else {
@@ -310,5 +312,11 @@ export const logOut = () => dispatch => {
     localStorage.clear()
     dispatch({
         type: 'LOGOUT'
+    })
+}
+
+export const clearErrors = () => dispatch => {
+    dispatch({
+        type: 'CLEAR_ERRORS'
     })
 }

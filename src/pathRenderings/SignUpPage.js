@@ -8,7 +8,7 @@ export default function SignInPage(props) {
         <div className='displaypage form-center'>
             <div className='signup-form'>
                 <SignUp signUp={props.signUp} />
-                <NavLink to="/signin" className="patch btn"><strong>Sign In</strong></NavLink>
+                <NavLink to="/signin" className="patch btn" onClick={props.clearErrors}><strong>Sign In</strong></NavLink>
             </div>
         </div>
     )

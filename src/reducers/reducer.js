@@ -20,7 +20,8 @@ const reducer = (state = initialState, action) => {
                 user: action.payload.user,
                 stocks: action.payload.stocks,
                 transactions: action.payload.transactions,
-                errors: null
+                errors: null,
+                purchase_complete: null
             }
         case "GET_MARKET":
             return {
@@ -36,6 +37,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload.user
+            }
+        case "CLEAR_ERRORS":
+            return {
+                ...state,
+                errors: null
             }
         case "LOGOUT":
             return {

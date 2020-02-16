@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, buyStock, signUp, logOut } from './thunks'
+import { loadUser, fetchUser, buyStock, signUp, clearErrors, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -20,6 +20,7 @@ const mapDispatchToProps = {
   fetchUser,
   buyStock,
   signUp,
+  clearErrors,
   logOut
 }
 
@@ -30,18 +31,20 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
+    console.log(this.props.errors)
     return (
       <div className="App">
-        {/* {this.props.errors ? (typeof (this.props.errors) === 'string' ?
-          <div className="alert alert-dark">
-          {<h2 className='error'>{ this.props.errors }</h2>}
+        {this.props.errors ? (typeof (this.props.errors) === 'string' ?
+          <div className="ui message">
+          {<h2 className='header'>{ this.props.errors }</h2>}
           </div> 
           :
-          <div className="alert alert-dark">
-            {this.props.errors.map(error => <h2 className='error'>{ error }</h2>)}
+          <div className="ui message">
+            <ul className='list'>
+              {this.props.errors.map(error => <h2 className='header content'>{ error }</h2>)}
+            </ul>
           </div>
-        ) : null} */}
+        ) : null}
         {localStorage.token ? <div className='banner'>
           <h1 className='appName'><NavLink to="" onClick={this.props.loadUser}>Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
@@ -54,8 +57,8 @@ class App extends React.Component {
         </div> : null}
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
-          <Route path='/signin' render={props => <SignInPage fetchUser={this.props.fetchUser} />} />
-          <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} />} />
+          <Route path='/signin' render={props => <SignInPage fetchUser={this.props.fetchUser} clearErrors={this.props.clearErrors} />} />
+          <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} clearErrors={this.props.clearErrors} />} />
           <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />
         </Switch>
