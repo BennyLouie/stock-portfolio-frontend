@@ -48,8 +48,8 @@ class App extends React.Component {
   buyStock = (evt, user) => {
     evt.preventDefault()
     this.props.buyStock(evt, user)
-    this.props.loadUser()
-    setInterval(this.props.loadUser, 1000)
+    // this.props.loadUser()
+    setInterval(this.props.loadUser, 2000)
   }
 
   render() {

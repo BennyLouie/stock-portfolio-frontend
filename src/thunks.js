@@ -135,7 +135,7 @@ export const buyStock = (evt, user) => dispatch => {
         .then(resp => resp.json())
         .then(data => {
             symbols = data.map( d => d.symbol)
-            console.log(symbols.includes(stock))
+            // console.log(symbols.includes(stock))
             if (symbols.includes(stock)) {
                 return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                         .then(resp => resp.json())
@@ -180,6 +180,13 @@ export const buyStock = (evt, user) => dispatch => {
                                             }
                                             else {
                                                 balance -= price
+                                                // console.log(data)
+                                                dispatch({
+                                                    type: 'BUY_STOCK',
+                                                    payload: {
+                                                        purchase_complete: `Purchase Complete! Total: $${data.price}`
+                                                    }
+                                                })
                                                 const token = localStorage.getItem("token")
                                                 return fetch(`http://localhost:3000/users/${user_id}`, {
                                                     method: 'PATCH',
@@ -190,15 +197,6 @@ export const buyStock = (evt, user) => dispatch => {
                                                     },
                                                     body: JSON.stringify({
                                                         balance
-                                                    })
-                                                })
-                                                    .then(resp => resp.json())
-                                                    .then(data => {
-                                                    dispatch({
-                                                        type: 'BUY_STOCK',
-                                                        payload: {
-                                                            purchase_complete: 'Purchase Complete!'
-                                                        }
                                                     })
                                                 })
                                             }
