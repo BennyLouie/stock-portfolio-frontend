@@ -8,8 +8,6 @@ function totalPrice(stocks) {
 }
 
 export default function Portfolio(props) {
-    console.log(props.stocks)
-    console.log(totalPrice(props.stocks))
     return (
         <div className='stocksdisplay'>
             <h1 className='title'>Portfolio (${totalPrice(props.stocks)})</h1>
