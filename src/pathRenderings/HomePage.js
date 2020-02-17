@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from "react-router-dom"
 import ActiveStocks from '../containers/ActiveStocks'
 import CheckOut from '../components/CheckOut'
 
