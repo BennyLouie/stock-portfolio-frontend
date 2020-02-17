@@ -53,7 +53,7 @@ class App extends React.Component {
           </div>
         ) : null}
         {localStorage.token ? <div className='banner'>
-          <h1 className='appName'><NavLink to="" onClick={this.props.loadUser}>Stock Portfolio App</NavLink></h1>
+          <h1 className='appName'><NavLink to="" onClick={this.props.fetchMarket}>Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
             <div className="links">
               <NavLink to='/portfolio' onClick={this.props.loadUser}><strong>Portfolio</strong></NavLink> |
