@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, buyStock, signUp, clearErrors, logOut } from './thunks'
+import { loadUser, fetchUser, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -18,6 +18,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   loadUser,
   fetchUser,
+  fetchMarket,
   buyStock,
   signUp,
   clearErrors,
@@ -28,6 +29,13 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.loadUser()
+    this.props.fetchMarket()
+  }
+
+  getUser = evt => {
+    evt.preventDefault()
+    this.props.fetchUser(evt)
+    this.props.fetchMarket()
   }
 
   render() {
@@ -56,7 +64,7 @@ class App extends React.Component {
         </div> : null}
         <Switch>
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} stocks={this.props.stocks} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
-          <Route path='/signin' render={props => <SignInPage fetchUser={this.props.fetchUser} clearErrors={this.props.clearErrors} />} />
+          <Route path='/signin' render={props => <SignInPage fetchUser={this.getUser} clearErrors={this.props.clearErrors} />} />
           <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} clearErrors={this.props.clearErrors} />} />
           <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />

@@ -17,43 +17,14 @@ export const loadUser = () => dispatch => {
                         transactions: data.transactions
                   }
                 })
-                return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
-                    .then(resp => resp.json())
-                    .then(data => {
-                        let parsedMarket = []
-                        data.map(m => {
-                            let stockInfo = {}
-                            stockInfo.symbol = m.symbol
-                            stockInfo.name = m.companyName
-                            stockInfo.opening_price = m.open
-                            if (m.iexRealtimeSize) {
-                                if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
-                                stockInfo.availableShares = m.iexRealtimeSize
-                                stockInfo.stockPrice = m.iexRealtimePrice
-                            } else {
-                                stockInfo.availableShares = m.iexAskSize
-                                stockInfo.stockPrice = m.iexAskPrice
-                                }
-                            }
-                            else {
-                                stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
-                                stockInfo.stockPrice = m.latestPrice
-                            }
-                            return parsedMarket.push(stockInfo)
-                        })
-                        dispatch({
-                            type: "GET_MARKET",
-                            payload: {
-                                market: parsedMarket
-                            }
-                        })
-                })
+                
         })
     }
 }
 // Manual Sign In with form:
 export const fetchUser = evt => dispatch => {
     evt.preventDefault()
+    // console.log(evt)
     return fetch("http://localhost:3000/login", {
         method: 'POST',
         headers: {
@@ -84,7 +55,13 @@ export const fetchUser = evt => dispatch => {
                         transactions: data.transactions
                     }
                 })
-                return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+              }
+        })
+}
+
+// Get Most Active Stock Market
+export const fetchMarket = () => dispatch => {
+    return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                     .then(resp => resp.json())
                     .then(data => {
                         let parsedMarket = []
@@ -115,8 +92,6 @@ export const fetchUser = evt => dispatch => {
                             }
                         })
                 })
-              }
-        })
 }
 
 // Buying Stocks
