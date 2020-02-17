@@ -9,12 +9,11 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 dispatch({
                   type: "GET_USER",
                   payload: {
                         user: data.user,
-                        stocks: data.stocks,
                         transactions: data.transactions
                   }
                 })
@@ -53,12 +52,34 @@ export const fetchUser = evt => dispatch => {
                     type: "GET_USER",
                     payload: {
                         user: data.user,
-                        stocks: data.stocks,
                         transactions: data.transactions
                     }
                 })
               }
         })
+}
+
+//Load Stocks
+export const loadStocks = user => dispatch => {
+    const token = localStorage.getItem("token")
+    if (token) {
+        return fetch(`http://localhost:3000/users/${user.id}`, {
+            headers: {
+                'Content-type': 'application/jspn',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                dispatch({
+                    type: 'GET_STOCKS',
+                    payload: {
+                        stocks: data.stocks
+                    }
+            })
+        })
+    }
 }
 
 // Get Most Active Stock Market

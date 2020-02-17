@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
+import { loadUser, fetchUser, loadStocks, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -18,6 +18,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   loadUser,
   fetchUser,
+  loadStocks,
   fetchMarket,
   buyStock,
   signUp,
@@ -30,7 +31,6 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadUser()
     this.props.fetchMarket()
-    // setInterval(this.props.loadUser, 2000)
     setInterval(this.props.fetchMarket, 5000)
   }
 
@@ -38,6 +38,11 @@ class App extends React.Component {
     evt.preventDefault()
     this.props.fetchUser(evt)
     this.props.fetchMarket()
+  }
+
+  loadStocks = user => {
+    this.props.loadStocks(user)
+    setInterval(() => this.props.loadStocks(user), 5000)
   }
 
   render() {
@@ -55,10 +60,10 @@ class App extends React.Component {
           </div>
         ) : null}
         {localStorage.token ? <div className='banner'>
-          <h1 className='appName'><NavLink to="" onClick={this.props.fetchMarket}>Stock Portfolio App</NavLink></h1>
+          <h1 className='appName'><NavLink to="" onClick={this.props.loadUser}>Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
             <div className="links">
-              <NavLink to='/portfolio' onClick={this.props.loadUser}><strong>Portfolio</strong></NavLink> |
+              <NavLink to='/portfolio' onClick={() => this.loadStocks(this.props.user)}><strong>Portfolio</strong></NavLink> |
               <NavLink to='/transactions' onClick={this.props.loadUser}><strong>Transactions</strong></NavLink> |
               <NavLink to='/signin' onClick={this.props.logOut}><strong>Log Out</strong></NavLink>
             </div>
