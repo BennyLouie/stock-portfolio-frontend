@@ -39,6 +39,7 @@ export const fetchUser = evt => dispatch => {
     })
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             if (data.errors) {
                 dispatch({
                   type: "ERRORS",
@@ -103,92 +104,97 @@ export const fetchMarket = () => dispatch => {
 // Buying Stocks
 export const buyStock = (evt, user) => dispatch => {
     evt.preventDefault()
-    // console.log(user)
+    console.log(user)
     const stock = evt.target.stock.value.toUpperCase()
     const user_id = user.id
     const quantity = evt.target.quantity.value
-    const symbols = user.valid_symbols
     let balance = user.balance
+    let symbols
 
-    if (symbols.includes(stock)) {
-        return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
-                .then(resp => resp.json())
-                .then(data => {
-                    let price
-                    if (data.asks.length === 0) {
-                        price = data.quote.latestPrice * quantity
-                        if (data.iexRealtimeSize < quantity) {
-                            dispatch({
-                                type: 'BUY_STOCK',
-                                payload: {
-                                    purchase_complete: 'Invalid Transaction'
+    return fetch("https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490")
+        .then(resp => resp.json())
+        .then(data => {
+            symbols = data.map( d => d.symbol)
+            console.log(symbols.includes(stock))
+            if (symbols.includes(stock)) {
+                return fetch(`https://sandbox.iexapis.com/stable/stock/${stock.toLowerCase()}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                        .then(resp => resp.json())
+                        .then(data => {
+                            let price
+                            if (data.asks.length === 0) {
+                                price = data.quote.latestPrice * quantity
+                                if (data.iexRealtimeSize < quantity) {
+                                    dispatch({
+                                        type: 'BUY_STOCK',
+                                        payload: {
+                                            purchase_complete: 'Invalid Transaction'
+                                        }
+                                    })
                                 }
-                            })
-                        }
-                    }
-                    else {
-                        price = data.asks[0].price * quantity
-                    }
-                    return fetch('http://localhost:3000/transactions', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    user_id,
-                                    stock,
-                                    price,
-                                    quantity
-                                })
-                            })
-                                .then(resp => resp.json())
-                                .then(data => {
-                                    if (data.errors) {
-                                        dispatch({
-                                            type: 'BUY_STOCK',
-                                            payload: {
-                                                purchase_complete: data.errors
+                            }
+                            else {
+                                price = data.asks[0].price * quantity
+                            }
+                            return fetch('http://localhost:3000/transactions', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            user_id,
+                                            stock,
+                                            price,
+                                            quantity
+                                        })
+                                    })
+                                        .then(resp => resp.json())
+                                        .then(data => {
+                                            if (data.errors) {
+                                                dispatch({
+                                                    type: 'BUY_STOCK',
+                                                    payload: {
+                                                        purchase_complete: data.errors
+                                                    }
+                                                })
                                             }
-                                        })
-                                    }
-                                    else {
-                                        balance -= price
-                                        const token = localStorage.getItem("token")
-                                        return fetch(`http://localhost:3000/users/${user_id}`, {
-                                            method: 'PATCH',
-                                            headers: {
-                                                'Content-type': 'application/json',
-                                                'Accept': 'application/json',
-                                                'Authorization': `Bearer ${token}`
-                                            },
-                                            body: JSON.stringify({
-                                                balance
-                                            })
-                                        })
-                                            .then(resp => resp.json())
-                                            .then(data => {
-                                            dispatch({
-                                                type: 'BUY_STOCK',
-                                                payload: {
-                                                    purchase_complete: 'Purchase Complete!'
-                                                }
-                                            })
-                                        })
-                                    }
-                            })
-                    
-        })
-    }
-    else {
-        dispatch({
-            type: 'BUY_STOCK',
-            payload: {
-                purchase_complete: 'We are unable to find the Stock you are looking for'
+                                            else {
+                                                balance -= price
+                                                const token = localStorage.getItem("token")
+                                                return fetch(`http://localhost:3000/users/${user_id}`, {
+                                                    method: 'PATCH',
+                                                    headers: {
+                                                        'Content-type': 'application/json',
+                                                        'Accept': 'application/json',
+                                                        'Authorization': `Bearer ${token}`
+                                                    },
+                                                    body: JSON.stringify({
+                                                        balance
+                                                    })
+                                                })
+                                                    .then(resp => resp.json())
+                                                    .then(data => {
+                                                    dispatch({
+                                                        type: 'BUY_STOCK',
+                                                        payload: {
+                                                            purchase_complete: 'Purchase Complete!'
+                                                        }
+                                                    })
+                                                })
+                                            }
+                                    })
+                            
+                })
             }
-        })
-    }
-        
+            else {
+                dispatch({
+                    type: 'BUY_STOCK',
+                    payload: {
+                        purchase_complete: 'We are unable to find the Stock you are looking for'
+                    }
+                })
+            }
+    })
 }
 
 // Signing Up
@@ -199,14 +205,7 @@ export const signUp = evt => dispatch => {
     const email = evt.target.email.value
     const password = evt.target.password.value
     const balance = 5000.00
-    let valid_symbols = []
-    return fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
-        .then(resp => resp.json())
-        .then(data => {
-            data.forEach(s => {
-                valid_symbols.push(s.symbol)
-            })
-            return fetch("http://localhost:3000/users", {
+    return fetch("http://localhost:3000/users", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,7 +214,6 @@ export const signUp = evt => dispatch => {
                 body: JSON.stringify({
                     first_name,
                     last_name,
-                    valid_symbols,
                     email,
                     password,
                     balance
@@ -282,7 +280,6 @@ export const signUp = evt => dispatch => {
                 })
                     }
             })
-        })
 }
 
 // LogOut
