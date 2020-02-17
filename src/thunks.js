@@ -9,6 +9,7 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
+                console.log(data)
                 dispatch({
                   type: "GET_USER",
                   payload: {
@@ -199,87 +200,89 @@ export const signUp = evt => dispatch => {
     const password = evt.target.password.value
     const balance = 5000.00
     let valid_symbols = []
-    fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
+    return fetch('https://sandbox.iexapis.com/stable/ref-data/iex/symbols?token=Tsk_75f8a00ef1ce400a9de5671974e6f490')
         .then(resp => resp.json())
         .then(data => {
-            data.forEach(s => valid_symbols.push(s.symbol))
-    })
-    return fetch("http://localhost:3000/users", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            first_name,
-            last_name,
-            valid_symbols,
-            email,
-            password,
-            balance
-        })
-    })
-        .then(resp => resp.json())
-        .then(data => {
-            if (data.errors) {
-                dispatch({
-                    type: 'ERRORS',
-                    payload: {
-                        errors: data.errors
+            data.forEach(s => {
+                valid_symbols.push(s.symbol)
+            })
+            return fetch("http://localhost:3000/users", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    first_name,
+                    last_name,
+                    valid_symbols,
+                    email,
+                    password,
+                    balance
+                })
+            })
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data.errors) {
+                        dispatch({
+                            type: 'ERRORS',
+                            payload: {
+                                errors: data.errors
+                            }
+                        })
                     }
-                })
-            }
-            else {
-                let token = data.jwt
-                localStorage.setItem("token", token)
-                return fetch("http://localhost:3000/auto_login", {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-            .then(resp => resp.json())
-            .then(data => {
-                dispatch({
-                  type: "GET_USER",
-                  payload: {
-                        user: data.user,
-                        stocks: data.stocks,
-                        transactions: data.transactions
-                  }
-                })
-                return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                    else {
+                        let token = data.jwt
+                        localStorage.setItem("token", token)
+                        return fetch("http://localhost:3000/auto_login", {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
                     .then(resp => resp.json())
                     .then(data => {
-                        let parsedMarket = []
-                        data.map(m => {
-                            let stockInfo = {}
-                            stockInfo.symbol = m.symbol
-                            stockInfo.name = m.companyName
-                            if (m.iexRealtimeSize) {
-                                if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
-                                stockInfo.availableShares = m.iexRealtimeSize
-                                stockInfo.stockPrice = m.iexRealtimePrice
-                            } else {
-                                stockInfo.availableShares = m.iexAskSize
-                                stockInfo.stockPrice = m.iexAskPrice
-                                }
-                            }
-                            else {
-                                stockInfo.stockPrice = m.latestPrice
-                                stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
-                            }
-                            return parsedMarket.push(stockInfo)
-                        })
                         dispatch({
-                            type: "GET_MARKET",
-                            payload: {
-                                market: parsedMarket
-                            }
+                          type: "GET_USER",
+                          payload: {
+                                user: data.user,
+                                stocks: data.stocks,
+                                transactions: data.transactions
+                          }
+                        })
+                        return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
+                            .then(resp => resp.json())
+                            .then(data => {
+                                let parsedMarket = []
+                                data.map(m => {
+                                    let stockInfo = {}
+                                    stockInfo.symbol = m.symbol
+                                    stockInfo.name = m.companyName
+                                    if (m.iexRealtimeSize) {
+                                        if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
+                                        stockInfo.availableShares = m.iexRealtimeSize
+                                        stockInfo.stockPrice = m.iexRealtimePrice
+                                    } else {
+                                        stockInfo.availableShares = m.iexAskSize
+                                        stockInfo.stockPrice = m.iexAskPrice
+                                        }
+                                    }
+                                    else {
+                                        stockInfo.stockPrice = m.latestPrice
+                                        stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
+                                    }
+                                    return parsedMarket.push(stockInfo)
+                                })
+                                dispatch({
+                                    type: "GET_MARKET",
+                                    payload: {
+                                        market: parsedMarket
+                                    }
+                                })
                         })
                 })
+                    }
+            })
         })
-            }
-    })
 }
 
 // LogOut

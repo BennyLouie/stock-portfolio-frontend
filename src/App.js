@@ -30,6 +30,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadUser()
     this.props.fetchMarket()
+    // setInterval(this.props.loadUser, 2000)
     setInterval(this.props.fetchMarket, 5000)
   }
 
