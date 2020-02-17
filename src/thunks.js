@@ -94,6 +94,29 @@ export const fetchMarket = () => dispatch => {
                 })
 }
 
+// Async Fetch Stocks
+export const fetchStocks = keys => dispatch => {
+    console.log(keys)
+    async function getData(url) {
+        return fetch(url)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data)
+                return data
+            })
+    }
+    let dataFetches = []
+    keys.forEach(async key => {
+        // console.log(key)
+        let url = `https://sandbox.iexapis.com/stable/stock/${key}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`
+        let data = await setTimeout(() => { getData(url) }, 15000)
+        dataFetches.push(data)
+    })
+    Promise.all(dataFetches).then(allData => {
+        console.log(allData)
+    })
+}
+
 // Buying Stocks
 export const buyStock = (evt, user) => dispatch => {
     evt.preventDefault()

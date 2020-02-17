@@ -13,20 +13,20 @@ function colorChange(currentPrice, openingPrice) {
     }
 }
 
-function owned(name, stockNames) {
-    if (stockNames.includes(name)) {
-        return true
-    }
-    else {
-        return false
-    }
-}
+// function owned(name, stockNames) {
+//     if (stockNames.includes(name)) {
+//         return true
+//     }
+//     else {
+//         return false
+//     }
+// }
 
 export default function Stock(props) {
 
     return (
         <div className="stock ui fluid card">
-            <h4><span data-status={colorChange(props.stockPrice, props.opening_price)}>{props.symbol}</span> - {props.availableShares} Shares @ $<span data-status={colorChange(props.stockPrice, props.opening_price)}>{(Math.round(props.stockPrice * 100) / 100).toFixed(2)}</span> {owned(props.symbol, props.stockNames) ? <span>Owned</span> : null}</h4>
+            <h4><span data-status={colorChange(props.stockPrice, props.opening_price)}>{props.symbol}</span> - {props.availableShares} Shares @ $<span data-status={colorChange(props.stockPrice, props.opening_price)}>{(Math.round(props.stockPrice * 100) / 100).toFixed(2)}</span> {/*owned(props.symbol, props.stockNames) ? <span>Owned</span> : null*/}</h4>
         </div>
     )
 }

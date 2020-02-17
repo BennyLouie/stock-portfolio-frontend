@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
+import { loadUser, fetchUser, fetchMarket, fetchStocks, buyStock, signUp, clearErrors, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -19,6 +19,7 @@ const mapDispatchToProps = {
   loadUser,
   fetchUser,
   fetchMarket,
+  fetchStocks,
   buyStock,
   signUp,
   clearErrors,
@@ -39,7 +40,14 @@ class App extends React.Component {
     this.props.fetchMarket()
   }
 
+  fetchStocks = () => {
+    // console.log(this.props.stocks)
+    const keys = Object.keys(this.props.stocks)
+    this.props.fetchStocks(keys)
+  }
+
   render() {
+    // console.log(this.props.stocks)
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -57,7 +65,7 @@ class App extends React.Component {
           <h1 className='appName'><NavLink to="" onClick={this.props.fetchMarket}>Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
             <div className="links">
-              <NavLink to='/portfolio' onClick={this.props.loadUser}><strong>Portfolio</strong></NavLink> |
+              <NavLink to='/portfolio' onClick={this.fetchStocks}><strong>Portfolio</strong></NavLink> |
               <NavLink to='/transactions' onClick={this.props.loadUser}><strong>Transactions</strong></NavLink> |
               <NavLink to='/signin' onClick={this.props.logOut}><strong>Log Out</strong></NavLink>
             </div>
