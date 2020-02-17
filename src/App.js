@@ -30,6 +30,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadUser()
     this.props.fetchMarket()
+    setInterval(this.props.fetchMarket, 5000)
   }
 
   getUser = evt => {
