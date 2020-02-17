@@ -45,6 +45,13 @@ class App extends React.Component {
     setInterval(() => this.props.loadStocks(user), 5000)
   }
 
+  buyStock = (evt, user) => {
+    evt.preventDefault()
+    this.props.buyStock(evt, user)
+    this.props.loadUser()
+    setInterval(this.props.loadUser, 1000)
+  }
+
   render() {
     return (
       <div className="App">
@@ -70,10 +77,10 @@ class App extends React.Component {
           </div>
         </div> : null}
         <Switch>
-          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} stocks={this.props.stocks} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />
+          <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} stocks={this.props.stocks} buyStock={this.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignInPage fetchUser={this.getUser} clearErrors={this.props.clearErrors} />} />
           <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} clearErrors={this.props.clearErrors} />} />
-          <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.props.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
+          <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}
