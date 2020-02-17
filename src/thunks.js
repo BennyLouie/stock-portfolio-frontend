@@ -69,7 +69,12 @@ export const fetchMarket = () => dispatch => {
                             let stockInfo = {}
                             stockInfo.symbol = m.symbol
                             stockInfo.name = m.companyName
-                            stockInfo.opening_price = m.open
+                            if (!m.open) {
+                                stockInfo.opening_price = m.latestPrice
+                            }
+                            else {
+                                stockInfo.opening_price = m.open
+                            }
                             if (m.iexRealtimeSize) {
                                 if (m.iexAskPrice.toString() === '0' || m.iexAskSize.toString() === '0') {
                                 stockInfo.availableShares = m.iexRealtimeSize
