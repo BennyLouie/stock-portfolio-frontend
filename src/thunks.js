@@ -104,7 +104,6 @@ export const fetchMarket = () => dispatch => {
 // Buying Stocks
 export const buyStock = (evt, user) => dispatch => {
     evt.preventDefault()
-    console.log(user)
     const stock = evt.target.stock.value.toUpperCase()
     const user_id = user.id
     const quantity = evt.target.quantity.value
@@ -277,8 +276,8 @@ export const signUp = evt => dispatch => {
                                     }
                                 })
                         })
-                })
-                    }
+                    })
+                }
             })
 }
 
