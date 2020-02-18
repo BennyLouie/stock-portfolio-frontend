@@ -12,6 +12,11 @@ The frontend uses React JS to build user interfaces and Redux to manage user sta
 
 The app also uses IEX Cloud API for the stock data.
 
+## Startup Instructions:
+
+1) `npm i`
+2) `npm start`
+
 ### A Brief Summary
 
 In this app, users can create an account using their first and last names, email, and a password.
