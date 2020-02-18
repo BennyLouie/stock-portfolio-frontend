@@ -42,7 +42,7 @@ class App extends React.Component {
 
   loadStocks = user => {
     this.props.loadStocks(user)
-    setInterval(() => this.props.loadStocks(user), 4000)
+    setInterval(() => this.props.loadStocks(user), 3000)
   }
 
   buyStock = (evt, user) => {
