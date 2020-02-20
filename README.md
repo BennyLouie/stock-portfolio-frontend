@@ -3,6 +3,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 This repository works as the frontend of my Stock Portfolio Application.
+The backend repository can be found here: https://github.com/BennyLouie/stock-portfolio-backend
+
+Here's the link to the demo: https://youtu.be/F97isHOIvKs
 
 ## Tools used
 
@@ -39,5 +42,3 @@ Error messages have also been included.
 
 ---------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------
-
-https://youtu.be/F97isHOIvKs
