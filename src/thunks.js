@@ -2,7 +2,7 @@
 export const loadUser = () => dispatch => {
     const token = localStorage.getItem("token")
     if (token) {
-        return fetch("http://localhost:3000/auto_login", {
+        return fetch("https://stock-port-api.herokuapp.com/auto_login", {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -26,7 +26,7 @@ export const loadUser = () => dispatch => {
 export const fetchUser = evt => dispatch => {
     evt.preventDefault()
     // console.log(evt)
-    return fetch("http://localhost:3000/login", {
+    return fetch("https://stock-port-api.herokuapp.com/login", {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -167,7 +167,7 @@ export const buyStock = (evt, user) => dispatch => {
                             else {
                                 price = data.asks[0].price * quantity
                             }
-                            return fetch('http://localhost:3000/transactions', {
+                            return fetch('https://stock-port-api.herokuapp.com/transactions', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ export const buyStock = (evt, user) => dispatch => {
                                                     }
                                                 })
                                                 const token = localStorage.getItem("token")
-                                                return fetch(`http://localhost:3000/users/${user_id}`, {
+                                                return fetch(`https://stock-port-api.herokuapp.com/users/${user_id}`, {
                                                     method: 'PATCH',
                                                     headers: {
                                                         'Content-type': 'application/json',
@@ -235,7 +235,7 @@ export const signUp = evt => dispatch => {
     const email = evt.target.email.value
     const password = evt.target.password.value
     const balance = 5000.00
-    return fetch("http://localhost:3000/users", {
+    return fetch("https://stock-port-api.herokuapp.com/users", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ export const signUp = evt => dispatch => {
                     else {
                         let token = data.jwt
                         localStorage.setItem("token", token)
-                        return fetch("http://localhost:3000/auto_login", {
+                        return fetch("https://stock-port-api.herokuapp.com/auto_login", {
                             headers: {
                                 'Authorization': `Bearer ${token}`
                             }
