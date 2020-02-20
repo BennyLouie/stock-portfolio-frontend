@@ -9,11 +9,12 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
-                // console.log(data)
+                console.log(data)
                 dispatch({
                   type: "GET_USER",
                   payload: {
                         user: data.user,
+                        stocks: data.stocks,
                         transactions: data.transactions
                   }
                 })
@@ -52,6 +53,7 @@ export const fetchUser = evt => dispatch => {
                     type: "GET_USER",
                     payload: {
                         user: data.user,
+                        stocks: data.stocks,
                         transactions: data.transactions
                     }
                 })
@@ -59,27 +61,37 @@ export const fetchUser = evt => dispatch => {
         })
 }
 
-//Load Stocks
-export const loadStocks = user => dispatch => {
-    const token = localStorage.getItem("token")
-    if (token) {
-        return fetch(`http://localhost:3000/users/${user.id}`, {
-            headers: {
-                'Content-type': 'application/jspn',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                dispatch({
-                    type: 'GET_STOCKS',
-                    payload: {
-                        stocks: data.stocks
-                    }
-            })
+// Async Fetch Stocks
+export const fetchStocks = keys => dispatch => {
+    function getData(key) {
+        let url = `https://sandbox.iexapis.com/stable/stock/${key}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`
+        return fetch(url)
+                .then(resp => resp.json())
+                .then(data => {
+                    return data
+                })
+            .catch(error => {
+            console.log("Error:", error)
         })
     }
+    let dataFetches = []
+    function doSetTimeout(i) {
+        setTimeout(async function () {
+            let data = await getData(keys[i])
+            dataFetches.push(data)
+            if (i <= 0) {
+                dispatch({
+                    type: "FETCH_STOCKS",
+                    payload: {
+                        stockData: dataFetches
+                    }
+                })
+                return
+            }
+            doSetTimeout(i - 1)
+        }, 50)
+    }
+    doSetTimeout(keys.length - 1)
 }
 
 // Get Most Active Stock Market

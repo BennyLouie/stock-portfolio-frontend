@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { withRouter, Switch, Route, Redirect, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadUser, fetchUser, loadStocks, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
+import { loadUser, fetchUser, fetchStocks, fetchMarket, buyStock, signUp, clearErrors, logOut } from './thunks'
 import SignInPage from './pathRenderings/SignInPage'
 import SignUpPage from './pathRenderings/SignUpPage'
 import HomePage from './pathRenderings/HomePage'
@@ -18,7 +18,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   loadUser,
   fetchUser,
-  loadStocks,
+  fetchStocks,
   fetchMarket,
   buyStock,
   signUp,
@@ -31,6 +31,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadUser()
     this.props.fetchMarket()
+    setInterval(this.fetchStocks, 8000)
     setInterval(this.props.fetchMarket, 5000)
   }
 
@@ -40,9 +41,9 @@ class App extends React.Component {
     this.props.fetchMarket()
   }
 
-  loadStocks = user => {
-    this.props.loadStocks(user)
-    setInterval(() => this.props.loadStocks(user), 3000)
+  fetchStocks = () => {
+    const keys = Object.keys(this.props.stocks)
+    this.props.fetchStocks(keys)
   }
 
   buyStock = (evt, user) => {
@@ -53,6 +54,7 @@ class App extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     return (
       <div className="App">
         {this.props.errors ? (typeof (this.props.errors) === 'string' ?
@@ -70,7 +72,7 @@ class App extends React.Component {
           <h1 className='appName'><NavLink to="" onClick={this.props.loadUser}>Stock Portfolio App</NavLink></h1>
           <div className='links-container'>
             <div className="links">
-              <NavLink to='/portfolio' onClick={() => this.loadStocks(this.props.user)}><strong>Portfolio</strong></NavLink> |
+              <NavLink to='/portfolio'><strong>Portfolio</strong></NavLink> |
               <NavLink to='/transactions' onClick={this.props.loadUser}><strong>Transactions</strong></NavLink> |
               <NavLink to='/signin' onClick={this.props.logOut}><strong>Log Out</strong></NavLink>
             </div>
@@ -80,7 +82,7 @@ class App extends React.Component {
           <Route exact path='/' render={props => <HomePage market={this.props.market} user={this.props.user} stocks={this.props.stocks} buyStock={this.buyStock} purchaseComplete={this.props.purchase_complete} />} />
           <Route path='/signin' render={props => <SignInPage fetchUser={this.getUser} clearErrors={this.props.clearErrors} />} />
           <Route path='/signup' render={props => <SignUpPage signUp={this.props.signUp} clearErrors={this.props.clearErrors} />} />
-          <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stocks} user={this.props.user} buyStock={this.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
+          <Route path='/portfolio' render={props => <PortfolioPage stocks={this.props.stockData} shares={this.props.stocks}  user={this.props.user} buyStock={this.buyStock} purchaseComplete={this.props.purchase_complete} />} />} />
           <Route path='/transactions' render={props => <TransactionsPage transactions={this.props.transactions} />} />
         </Switch>
         {localStorage.token ? <Redirect to="" /> : <Redirect to="signin" />}

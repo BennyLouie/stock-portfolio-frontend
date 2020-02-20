@@ -14,9 +14,13 @@ function colorChange(currentPrice, openingPrice) {
 }
 
 export default function MyStock(props) {
+    function findShares(symbol, shares) {
+        let num = Object.keys(shares).find(k => k === symbol)
+        return shares[num]
+    }
     return (
         <div className='stock ui fluid card'>
-            <h4><span data-status={colorChange(props.current_price, props.opening_price)}>{props.name}</span> - {props.shares} Shares <span data-status={colorChange(props.current_price, props.opening_price)}>${(Math.round(props.current_price * props.shares * 100) / 100).toFixed(2)}</span></h4>
+            <h4><span data-status={colorChange(props.stock.quote.latestPrice, props.stock.quote.open)}>{props.stock.quote.symbol}</span> - {findShares(props.stock.quote.symbol, props.shares)} Shares <span data-status={colorChange(props.stock.quote.latestPrice, props.stock.quote.open)}>${(Math.round(props.stock.quote.latestPrice * findShares(props.stock.quote.symbol, props.shares) * 100) / 100).toFixed(2)}</span></h4>
         </div>
     )
 }
