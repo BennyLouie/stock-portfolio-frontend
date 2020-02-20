@@ -3,6 +3,7 @@ const initialState = {
     stocks: [],
     transactions: [],
     market: [],
+    stockData: [],
     purchase_complete: null,
     errors: null
 }
@@ -27,6 +28,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 market: action.payload.market
+            }
+        case "FETCH_STOCKS":
+            return {
+                ...state,
+                stockData: action.payload.stockData
             }
         case "BUY_STOCK":
             return {

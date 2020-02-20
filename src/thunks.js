@@ -96,25 +96,35 @@ export const fetchMarket = () => dispatch => {
 
 // Async Fetch Stocks
 export const fetchStocks = keys => dispatch => {
-    console.log(keys)
-    async function getData(url) {
+    function getData(key) {
+        let url = `https://sandbox.iexapis.com/stable/stock/${key}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`
         return fetch(url)
                 .then(resp => resp.json())
                 .then(data => {
-                    console.log(data)
-                return data
-            })
+                    return data
+                })
+            .catch(error => {
+            console.log("Error:", error)
+        })
     }
     let dataFetches = []
-    keys.forEach(async key => {
-        // console.log(key)
-        let url = `https://sandbox.iexapis.com/stable/stock/${key}/book?token=Tsk_75f8a00ef1ce400a9de5671974e6f490`
-        let data = await setTimeout(() => { getData(url) }, 15000)
-        dataFetches.push(data)
-    })
-    Promise.all(dataFetches).then(allData => {
-        console.log(allData)
-    })
+    function doSetTimeout(i) {
+        setTimeout(async function () {
+            let data = await getData(keys[i])
+            dataFetches.push(data)
+            if (i <= 0) {
+                dispatch({
+                    type: "FETCH_STOCKS",
+                    payload: {
+                        stockData: dataFetches
+                    }
+                })
+                return
+            }
+            doSetTimeout(i - 1)
+        }, 50)
+    }
+    doSetTimeout(keys.length - 1)
 }
 
 // Buying Stocks
