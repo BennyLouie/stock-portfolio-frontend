@@ -9,7 +9,7 @@ export const loadUser = () => dispatch => {
         })
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 dispatch({
                   type: "GET_USER",
                   payload: {
@@ -99,6 +99,7 @@ export const fetchMarket = () => dispatch => {
     return fetch(`https://sandbox.iexapis.com/stable/stock/market/collection/list?collectionName=mostactive&token=Tsk_75f8a00ef1ce400a9de5671974e6f490`)
                     .then(resp => resp.json())
                     .then(data => {
+                        // console.log(data)
                         let parsedMarket = []
                         data.map(m => {
                             let stockInfo = {}
@@ -123,6 +124,7 @@ export const fetchMarket = () => dispatch => {
                                 stockInfo.availableShares = 10 //Hard Coded Available Shares during Weekend
                                 stockInfo.stockPrice = m.latestPrice
                             }
+                            // console.log(parsedMarket)
                             return parsedMarket.push(stockInfo)
                         })
                         dispatch({
