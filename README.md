@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+------------------------------------------------------------------------------------------------------------------------------
 
 This repository works as the frontend of my Stock Portfolio Application.
 The backend repository can be found here: https://github.com/BennyLouie/stock-portfolio-backend
